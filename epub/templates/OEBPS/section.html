@@ -1,16 +1,10 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:py="http://genshi.edgewall.org/">
-<!--!
-Copyright (c) 2012, Bin Tan
-This file is distributed under the BSD Licence. See python-epub-builder-license.txt for details.
--->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://genshi.edgewall.org/">
 <head>
   <title>${section.title}</title>
-  <style type="text/css">
-h1 { text-align: center; }
-${section.css}
-  </style>
+  <link href="css/style.css" type="text/css" rel="stylesheet"/>
+  <style type="text/css" py:if="section.css">${section.css}</style>
 </head>
+
 <body>
   <h1>${section.title}</h1>
   <py:for each="paragraph in section.text">

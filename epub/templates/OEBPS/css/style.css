@@ -1,0 +1,23 @@
+.title, .authors {
+  text-align: center;
+}
+span.author {
+  margin: 1em;
+}
+.tocEntry-1 {
+}
+.tocEntry-2 {
+	text-indent: 1em;
+}
+.tocEntry-3 {
+	text-indent: 2em;
+}
+.tocEntry-4 {
+	text-indent: 3em;
+}
+h1 { text-align: center; }
+div, img {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}

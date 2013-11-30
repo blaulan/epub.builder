@@ -1,0 +1,15 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://genshi.edgewall.org/">
+<head>
+  <title>${book.title}</title>
+  <link href="css/style.css" type="text/css" rel="stylesheet"/>
+</head>
+
+<body>
+  <h1 class="title">${book.title}</h1>
+  <h3 class="authors">
+  <py:for each="creator, _ in book.creators">
+  <span class="author">$creator</span>
+  </py:for>
+  </h3>
+</body>
+</html>
