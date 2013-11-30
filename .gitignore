@@ -1,0 +1,3 @@
+*.pyc
+tests/build_tests.py
+tests/book/
