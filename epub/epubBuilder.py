@@ -64,7 +64,6 @@ class EpubBook:
         self.coverImage = None
         self.titlePage = None
         self.tocPage = None
-        self.cssDefault = None
 
         self.spine = []
         self.guide = {}
@@ -119,7 +118,7 @@ class EpubBook:
         return item
 
     def addHtmlForImage(self, imageItem):
-        tmpl = self.loader.load("OEBPS/image.html")
+        tmpl = self.loader.load(os.path.join("OEBPS", "image.html"))
         stream = tmpl.generate(book=self, item=imageItem)
         html = stream.render(
             "xhtml", doctype="xhtml11", drop_xml_decl=False)
@@ -140,7 +139,7 @@ class EpubBook:
         item = EpubItem()
         item.id = "css_%d" % (len(self.cssItems) + 1)
         item.srcPath = srcPath
-        item.destPath = "css/%s" % os.path.split(srcPath)[-1]
+        item.destPath = os.path.join("css", os.path.split(srcPath)[-1])
         item.mimeType = "text/css"
         assert item.destPath not in self.cssItems
         self.cssItems[item.destPath] = item
@@ -149,7 +148,7 @@ class EpubBook:
     def addCover(self, srcPath):
         assert not self.coverImage
         _, ext = os.path.splitext(srcPath)
-        destPath = "images/cover%s" % ext
+        destPath = os.path.join("images", "cover%s" % ext)
         self.coverImage = self.addImage(srcPath, destPath)
         #coverPage = self.addHtmlForImage(self.coverImage)
         #self.addSpineItem(coverPage, False, -300)
@@ -159,7 +158,7 @@ class EpubBook:
         assert self.titlePage
         if self.titlePage.html:
             return
-        tmpl = self.loader.load("OEBPS/title-page.html")
+        tmpl = self.loader.load(os.path.join("OEBPS", "title-page.html"))
         stream = tmpl.generate(book=self)
         self.titlePage.html = stream.render(
             "xhtml", doctype="xhtml11", drop_xml_decl=False)
@@ -172,7 +171,7 @@ class EpubBook:
 
     def __makeTocPage(self):
         assert self.tocPage
-        tmpl = self.loader.load("OEBPS/toc.html")
+        tmpl = self.loader.load(os.path.join("OEBPS", "toc.html"))
         stream = tmpl.generate(book=self)
         self.tocPage.html = stream.render(
             "xhtml", doctype="xhtml11", drop_xml_decl=False)
@@ -221,7 +220,9 @@ class EpubBook:
         return node
 
     def makeDirs(self):
-        for folder in ["META-INF", "OEBPS", "OEBPS/css", "OEBPS/images"]:
+        for folder in ["META-INF", "OEBPS", 
+            os.path.join("OEBPS", "css"), 
+            os.path.join("OEBPS", "images")]:
             try:
                 os.makedirs(os.path.join(self.rootDir, folder))
             except OSError:
@@ -230,14 +231,14 @@ class EpubBook:
     def __writeContainerXML(self):
         fout = open(
             os.path.join(self.rootDir, "META-INF", "container.xml"), "w")
-        tmpl = self.loader.load("META-INF/container.xml")
+        tmpl = self.loader.load(os.path.join("META-INF", "container.xml"))
         stream = tmpl.generate()
         fout.write(stream.render("xml"))
         fout.close()
 
     def __writeContentOPF(self):
         fout = open(os.path.join(self.rootDir, "OEBPS", "content.opf"), "w")
-        tmpl = self.loader.load("OEBPS/content.opf")
+        tmpl = self.loader.load(os.path.join("OEBPS", "content.opf"))
         stream = tmpl.generate(book=self).render("xml")
         fout.write(stream.encode("utf-8"))
         fout.close()

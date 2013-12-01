@@ -55,7 +55,7 @@ class Book:
         if self.cover:
             self.impl.addCover(self.cover)
         self.impl.addCss(self.css if self.css else os.path.join(
-            self.templatePath, "OEBPS/css/style.css"))
+            self.templatePath, os.path.join("OEBPS", "css", "style.css")))
         self.impl.addTitlePage()
         self.impl.addTocPage()
         root = Section()
