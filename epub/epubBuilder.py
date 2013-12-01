@@ -56,6 +56,7 @@ class EpubBook:
         self.title = ""
         self.creators = []
         self.metaInfo = []
+        self.version = "3"
 
         self.imageItems = {}
         self.htmlItems = {}
@@ -69,6 +70,9 @@ class EpubBook:
         self.guide = {}
         self.tocMapRoot = TocMapNode()
         self.lastNodeAtDepth = {0: self.tocMapRoot}
+
+    def setVersion(self, version):
+        self.version = version
 
     def setTitle(self, title):
         self.title = title
@@ -171,7 +175,7 @@ class EpubBook:
 
     def __makeTocPage(self):
         assert self.tocPage
-        tmpl = self.loader.load(os.path.join("OEBPS", "toc.html"))
+        tmpl = self.loader.load(os.path.join("OEBPS", "toc_v%s.html" % self.version))
         stream = tmpl.generate(book=self)
         self.tocPage.html = stream.render(
             "xhtml", doctype="xhtml11", drop_xml_decl=False)
@@ -236,9 +240,17 @@ class EpubBook:
         fout.write(stream.render("xml"))
         fout.close()
 
+    def __writeTocNCX(self):
+        self.tocMapRoot.assignPlayOrder()
+        fout = open(os.path.join(self.rootDir, "OEBPS", "toc.ncx"), "w")
+        tmpl = self.loader.load(os.path.join("OEBPS", "toc.ncx"))
+        stream = tmpl.generate(book = self)
+        fout.write(stream.render("xml").encode("utf-8"))
+        fout.close()
+
     def __writeContentOPF(self):
         fout = open(os.path.join(self.rootDir, "OEBPS", "content.opf"), "w")
-        tmpl = self.loader.load(os.path.join("OEBPS", "content.opf"))
+        tmpl = self.loader.load(os.path.join("OEBPS", "content_v%s.opf" % self.version))
         stream = tmpl.generate(book=self).render("xml")
         fout.write(stream.encode("utf-8"))
         fout.close()
@@ -298,3 +310,5 @@ class EpubBook:
         self.__writeItems()
         self.__writeContainerXML()
         self.__writeContentOPF()
+        if self.version == "2":
+            self.__writeTocNCX()

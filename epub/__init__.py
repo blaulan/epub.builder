@@ -26,10 +26,13 @@ class Book:
         self.cover = ""
         self.lang = "en-US"
         self.css = ""
+        self.version = "3"
         self.sections = []
+
         self.templatePath = os.path.join(os.path.split(
             os.path.realpath(__file__))[0], "templates")
         self.templateLoader = TemplateLoader(self.templatePath)
+
 
     def __addSection(self, section, id, depth):
         if depth > 0:
@@ -48,6 +51,7 @@ class Book:
     def make(self, outputDir):
         outputFile = outputDir + ".epub"
 
+        self.impl.setVersion(self.version)
         self.impl.setTitle(self.title)
         self.impl.setLang(self.lang)
         for author in self.authors:
@@ -63,4 +67,5 @@ class Book:
         self.__addSection(root, "s", 0)
         self.impl.createBook(outputDir)
         self.impl.createArchive(outputDir, outputFile)
+        
         #self.impl.checkEpub("epubcheck-1.0.5.jar", outputFile)

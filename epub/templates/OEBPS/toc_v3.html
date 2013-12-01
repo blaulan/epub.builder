@@ -10,7 +10,7 @@
 
   <body>
     <nav epub:type="toc">
-      <ol>
+      <ol class="toc">
       <py:def function="tocEntry(node)">
         <li><div class="tocEntry-${node.depth}"><a href="${node.href}">${node.title}</a></div></li>
         <py:for each="child in node.children">
