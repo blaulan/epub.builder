@@ -1,21 +1,25 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://genshi.edgewall.org/">
-<head>
-  <title>${section.title}</title>
-  <link href="css/style.css" type="text/css" rel="stylesheet"/>
-  <style type="text/css" py:if="section.css">${section.css}</style>
-</head>
+<?xml version="1.0" encoding="UTF-8"?>
+<html 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:epub="http://www.idpf.org/2007/ops" 
+  xmlns:py="http://genshi.edgewall.org/">
+  <head>
+    <title>${section.title}</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet"/>
+    <style type="text/css" py:if="section.css">${section.css}</style>
+  </head>
 
-<body>
-  <h1>${section.title}</h1>
-  <py:for each="paragraph in section.text">
-  <p>
-    <py:choose test="type(paragraph)">
-    <py:when test="type([])">
-		<py:choose test="className" py:for="text, className in paragraph"><py:when test="''">$text</py:when><py:otherwise><span class="$className">$text</span></py:otherwise></py:choose>
-    </py:when>
-    <py:otherwise>$paragraph</py:otherwise>
-    </py:choose>
-  </p>
-  </py:for>
-</body>
+  <body>
+    <h1>${section.title}</h1>
+    <py:for each="paragraph in section.text">
+    <p>
+      <py:choose test="type(paragraph)">
+      <py:when test="type([])">
+		  <py:choose test="className" py:for="text, className in paragraph"><py:when test="''">$text</py:when><py:otherwise><span class="$className">$text</span></py:otherwise></py:choose>
+      </py:when>
+      <py:otherwise>$paragraph</py:otherwise>
+      </py:choose>
+    </p>
+    </py:for>
+  </body>
 </html>

@@ -1,15 +1,19 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://genshi.edgewall.org/">
-<head>
-  <title>${book.title}</title>
-  <link href="css/style.css" type="text/css" rel="stylesheet"/>
-</head>
+<?xml version="1.0" encoding="UTF-8"?>
+<html 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:epub="http://www.idpf.org/2007/ops" 
+  xmlns:py="http://genshi.edgewall.org/">
+  <head>
+    <title>${book.title}</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet"/>
+  </head>
 
-<body>
-  <h1 class="title">${book.title}</h1>
-  <h2 class="authors">
-  <py:for each="creator, _ in book.creators">
-  <span class="author">$creator</span>
-  </py:for>
-  </h3>
-</body>
+  <body>
+    <h1 class="title">${book.title}</h1>
+    <h2 class="authors">
+    <py:for each="creator, _ in book.creators">
+    <span class="author">$creator</span>
+    </py:for>
+    </h2>
+  </body>
 </html>

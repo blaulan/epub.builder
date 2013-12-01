@@ -93,7 +93,7 @@ h6 {
 
 /* Do not indent first paragraph. Mobi will need class='first-para' */
 h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
-  text-indent: 0; }
+  text-indent: 2em; }
 
 p {
   /* paperwhite defaults to sans */
@@ -110,7 +110,7 @@ p {
   line-height: 1.5em;
   margin: 0;
   text-align: justify;
-  text-indent: 1em;
+  text-indent: 2em;
   orphans: 2;
   widows: 2; }
   p.first-para, p.first-para-chapter, p.note-p-first {
