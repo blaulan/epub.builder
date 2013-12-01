@@ -14,7 +14,7 @@ class Section:
         self.subsections = []
         self.css = ""
         self.text = []
-        self.templateFileName = "OEBPS/section.html"
+        self.templateFileName = os.path.join("OEBPS", "section.html")
 
 
 class Book:
@@ -55,7 +55,7 @@ class Book:
         if self.cover:
             self.impl.addCover(self.cover)
         self.impl.addCss(self.css if self.css else os.path.join(
-            self.templatePath, os.path.join("OEBPS", "css", "style.css")))
+            self.templatePath, "OEBPS", "css", "style.css"))
         self.impl.addTitlePage()
         self.impl.addTocPage()
         root = Section()
