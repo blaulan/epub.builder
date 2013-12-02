@@ -175,7 +175,7 @@ class EpubBook:
 
     def __makeTocPage(self):
         assert self.tocPage
-        tmpl = self.loader.load(os.path.join("OEBPS", "toc_v%s.html" % self.version))
+        tmpl = self.loader.load(os.path.join("OEBPS", "toc.html"))
         stream = tmpl.generate(book=self)
         self.tocPage.html = stream.render(
             "xhtml", doctype="xhtml11", drop_xml_decl=False)
@@ -250,7 +250,7 @@ class EpubBook:
 
     def __writeContentOPF(self):
         fout = open(os.path.join(self.rootDir, "OEBPS", "content.opf"), "w")
-        tmpl = self.loader.load(os.path.join("OEBPS", "content_v%s.opf" % self.version))
+        tmpl = self.loader.load(os.path.join("OEBPS", "content.opf"))
         stream = tmpl.generate(book=self).render("xml")
         fout.write(stream.encode("utf-8"))
         fout.close()
