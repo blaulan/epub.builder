@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:epub="http://www.idpf.org/2007/ops" 
+  xmlns:py="http://genshi.edgewall.org/">
+  <head>
+    <title>${book.title}</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet"/>
+  </head>
+
+  <body>
+  <py:choose test="str(book.version)">
+  <py:when test="str('2')">
+  <py:def function="tocEntry(node)">
+    <div class="tocEntry-${node.depth}"><a href="${node.href}">${node.title}</a></div>
+    <py:for each="child in node.children">
+    ${tocEntry(child)}
+    </py:for>
+  </py:def>
+  <py:for each="child in book.getTocMapRoot().children">
+    ${tocEntry(child)}
+  </py:for>
+  </py:when>
+  
+  <py:when test="str('3')">
+    <nav epub:type="toc">
+      <ol>
+      <py:def function="tocEntry(node)">
+        <li><div class="tocEntry-${node.depth}"><a href="${node.href}">${node.title}</a></div></li>
+        <py:for each="child in node.children">
+        ${tocEntry(child)}
+        </py:for>
+      </py:def>
+      <py:for each="child in book.getTocMapRoot().children">
+        ${tocEntry(child)}
+      </py:for>
+      </ol>
+    </nav>
+  </py:when>
+  </py:choose>
+  </body>
+</html>
